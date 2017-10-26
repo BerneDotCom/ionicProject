@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+
+
 /**
  * Generated class for the AddImagePage page.
  *
@@ -22,19 +25,24 @@ export class AddImagePage {
   };
 
   base64Image:String;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddImagePage');
   }
-  
+
+
+  //Lancement de la caméra pour la capture d'une image
   runCamera(event){
     this.camera.getPicture(this.options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      this.base64Image = 'data:image/jpeg;base64,' + imageData;
-     console.log(this.base64Image);
+     this.base64ToGallery.base64ToGallery(imageData, { prefix: '_img' }).then(
+       res => console.log('Saved image to gallery ', res),
+       err => console.log('Error saving image to gallery ', err)
+     );
     }, (err) => {
      // Handle error
     });
