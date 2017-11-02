@@ -63,11 +63,24 @@ export class AddImagePage {
 
   captureMovie(event)
   {
-    let options: CaptureImageOptions = { limit: 3 };
-    this.mediaCapture.captureImage(options)
-      .then(
-        (data: MediaFile[]) => console.log(data),
-        (err: CaptureError) => console.error(err)
-      );
+
+    var options = {
+     limit: 1,
+     duration: 10
+   };
+
+   this.mediaCapture.captureVideo(options);
+
+    function onSuccess(mediaFiles) {
+       var i, path, len;
+       for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+          path = mediaFiles[i].fullPath;
+          console.log(mediaFiles);
+       }
+    }
+
+    function onError(error) {
+      console.log('Error code: ' + error.code, null, 'Capture Error');
+    }
   }
 }
