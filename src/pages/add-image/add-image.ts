@@ -29,6 +29,10 @@ export class AddImagePage {
 
   //Déclaration de la variable qui contiendra l'image sous forme de string
   base64Image: string;
+
+  //Chemin de la futur video enregistrée
+  path: string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery, private mediaCapture: MediaCapture, private localNotifications: LocalNotifications) {
     //Constructor
   }
@@ -39,10 +43,10 @@ export class AddImagePage {
 
 
   /**
-  *Lancement de la caméra pour la capture d'une image
-  *Sauvegarde de l'image
-  *Affichage de la notification de succes
-**/
+    *Lancement de la caméra pour la capture d'une image
+    *Sauvegarde de l'image
+    *Affichage de la notification de succes
+  */
   runCamera(event){
     this.camera.getPicture(this.options).then((imageData) => {
      //Conversion de l'image en base64
@@ -53,6 +57,7 @@ export class AddImagePage {
      this.base64ToGallery.base64ToGallery(imageData, { prefix: '_img' }).then(
        //Affichage de la notification de succes
        res => {
+         //Specification de la notification à afficher
          this.localNotifications.schedule({
            id: 1,
            text: 'Votre image a bien été sauvegardée',
@@ -66,27 +71,35 @@ export class AddImagePage {
     });
   }
 
+
+/**
+* Lancement de la camera et capture d'une video
+*/
   captureMovie(event)
   {
 
+    // Definition des options d'enregistrement
     var options = {
      limit: 1,
      duration: 10
     };
 
+    //Lancement de la capture video et traitements
    this.mediaCapture.captureVideo(options).then(
     (data: MediaFile[]) => onSuccess(data),
     (err: CaptureError) => onError(err)
   );
 
+  //En cas de succes, console.log du path du fichier
    function onSuccess(mediaFiles) {
        var i, path, len;
        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-          path = mediaFiles[i].fullPath;
+          this.path = mediaFiles[i].fullPath;
           console.log(mediaFiles);
        }
     }
 
+    // En cas d'echec, console.log du message d'erreur
    function onError(error) {
       console.log('Error code: ' + error.code, null, 'Capture Error');
     }
