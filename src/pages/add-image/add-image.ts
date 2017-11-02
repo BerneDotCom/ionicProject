@@ -38,7 +38,11 @@ export class AddImagePage {
   }
 
 
-  //Lancement de la caméra pour la capture d'une image
+  /**
+  *Lancement de la caméra pour la capture d'une image
+  *Sauvegarde de l'image
+  *Affichage de la notification de succes
+**/
   runCamera(event){
     this.camera.getPicture(this.options).then((imageData) => {
      //Conversion de l'image en base64
@@ -48,22 +52,18 @@ export class AddImagePage {
     //Sauvegarde de l'image dans la gallery de l'utilisateur
      this.base64ToGallery.base64ToGallery(imageData, { prefix: '_img' }).then(
        //Affichage de la notification de succes
-       res => showNotification()
+       res => {
+         this.localNotifications.schedule({
+           id: 1,
+           text: 'Votre image a bien été sauvegardée',
+           title: 'Notification splendide'
+         });
+       }
       )
     }, (err) => {
       //Message de retour en cas d'échec
       err => console.log('L\'image n\'a pas pu être sauvegardée ', err)
     });
-
-    function showNotification()
-    {
-      //Definition de la notification affichée en cas de succes
-      this.localNotifications.schedule({
-        id: 1,
-        text: 'Votre image a bien été sauvegardée',
-        title: 'Notification splendide'
-      });
-    }
   }
 
   captureMovie(event)
