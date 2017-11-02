@@ -27,7 +27,7 @@ export class AddImagePage {
   };
 
   //Déclaration de la variable qui contiendra l'image sous forme de string
-  base64Image:String;
+  base64Image: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery, public toastCtrl: ToastController, private mediaCapture: MediaCapture) {
     //Constructor
   }
@@ -67,11 +67,14 @@ export class AddImagePage {
     var options = {
      limit: 1,
      duration: 10
-   };
+    };
 
-   this.mediaCapture.captureVideo(options);
+   this.mediaCapture.captureVideo(options).then(
+    (data: MediaFile[]) => onSuccess(data),
+    (err: CaptureError) => onError(err)
+  );
 
-    function onSuccess(mediaFiles) {
+   function onSuccess(mediaFiles) {
        var i, path, len;
        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
           path = mediaFiles[i].fullPath;
@@ -79,7 +82,7 @@ export class AddImagePage {
        }
     }
 
-    function onError(error) {
+   function onError(error) {
       console.log('Error code: ' + error.code, null, 'Capture Error');
     }
   }
