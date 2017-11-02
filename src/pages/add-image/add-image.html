@@ -17,6 +17,9 @@
 
 
 <ion-content padding>
-  <button ion-button primary type="button" name="button" (click)=runCamera()>Test camera</button>
+  <button ion-button icon-right primary type="button" name="button" (click)=runCamera()>
+    Use camera
+    <ion-icon name="camera"></ion-icon>
+  </button>
   <img src="{{base64Image}}">
 </ion-content>
