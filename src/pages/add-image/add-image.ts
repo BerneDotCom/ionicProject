@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 /**
  * Generated class for the AddImagePage page.
@@ -28,7 +29,7 @@ export class AddImagePage {
 
   //Déclaration de la variable qui contiendra l'image sous forme de string
   base64Image: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery, public toastCtrl: ToastController, private mediaCapture: MediaCapture) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery, private mediaCapture: MediaCapture, private localNotifications: LocalNotifications) {
     //Constructor
   }
 
@@ -43,22 +44,26 @@ export class AddImagePage {
      //Conversion de l'image en base64
      this.base64Image = 'data:image/jpeg;base64,' + imageData;
 
-     //Definition du toast affiché en cas de succes
-     let toast = this.toastCtrl.create({
-       message: 'Image sauvegardée dans la gallerie',
-       duration: 3000
-     });
-
 
     //Sauvegarde de l'image dans la gallery de l'utilisateur
      this.base64ToGallery.base64ToGallery(imageData, { prefix: '_img' }).then(
-       //Affichage du toast de succes
-       res => toast.present()
+       //Affichage de la notification de succes
+       res => showNotification()
       )
     }, (err) => {
       //Message de retour en cas d'échec
       err => console.log('L\'image n\'a pas pu être sauvegardée ', err)
     });
+
+    function showNotification()
+    {
+      //Definition de la notification affichée en cas de succes
+      this.localNotifications.schedule({
+        id: 1,
+        text: 'Votre image a bien été sauvegardée',
+        title: 'Notification splendide'
+      });
+    }
   }
 
   captureMovie(event)
