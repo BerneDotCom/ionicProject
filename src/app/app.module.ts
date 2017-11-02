@@ -24,7 +24,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AddImagePageModule,
-    LocalNotifications,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

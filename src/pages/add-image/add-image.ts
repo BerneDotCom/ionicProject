@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { MediaCapture, MediaFile, CaptureError } from '@ionic-native/media-capture';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 /**
