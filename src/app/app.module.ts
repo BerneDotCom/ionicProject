@@ -7,38 +7,33 @@ import { MyApp } from './app.component';
 //Import des pages de l'application
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { AddImagePage } from '../pages/add-image/add-image';
+import { AddImagePageModule } from '../pages/add-image/add-image.module';
 
 //Import des plugins
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Camera } from '@ionic-native/camera';
-import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    AddImagePage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AddImagePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     ListPage,
-    AddImagePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Base64ToGallery
   ]
 })
 export class AppModule {}
