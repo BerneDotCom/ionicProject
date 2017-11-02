@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
-
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 
 /**
  * Generated class for the AddImagePage page.
@@ -28,7 +28,7 @@ export class AddImagePage {
 
   //Déclaration de la variable qui contiendra l'image sous forme de string
   base64Image:String;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private camera: Camera,private base64ToGallery: Base64ToGallery, public toastCtrl: ToastController, private mediaCapture: MediaCapture) {
     //Constructor
   }
 
@@ -59,7 +59,15 @@ export class AddImagePage {
       //Message de retour en cas d'échec
       err => console.log('L\'image n\'a pas pu être sauvegardée ', err)
     });
+  }
 
-
+  captureMovie(event)
+  {
+    let options: CaptureImageOptions = { limit: 3 };
+    this.mediaCapture.captureImage(options)
+      .then(
+        (data: MediaFile[]) => console.log(data),
+        (err: CaptureError) => console.error(err)
+      );
   }
 }

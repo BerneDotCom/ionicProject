@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { AddImagePage } from './add-image';
 import { Camera } from '@ionic-native/camera';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+import { MediaCapture } from '@ionic-native/media-capture';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
   ],
   providers: [
     Camera,
-    Base64ToGallery
+    Base64ToGallery,
+    MediaCapture
   ]
 })
 export class AddImagePageModule {}
